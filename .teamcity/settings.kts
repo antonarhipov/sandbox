@@ -34,9 +34,7 @@ project {
                 buildType(Test1)
                 buildType(Test2)
             }
-            buildType(Test3) {
-
-            }
+            buildType(Test3)
         }
         buildType(Deploy)
     }
