@@ -30,8 +30,13 @@ project {
     sequential {
         buildType(Build)
         parallel {
-            buildType(Test1)
-            buildType(Test2)
+            sequential {
+                buildType(Test1)
+                buildType(Test2)
+            }
+            buildType(Test3) {
+
+            }
         }
         buildType(Deploy)
     }
@@ -65,6 +70,10 @@ object Test1 : BuildType({
 
 object Test2 : BuildType({
     name = "Test2"
+})
+
+object Test3 : BuildType({
+    name = "Test3"
 })
 
 object Deploy : BuildType({
