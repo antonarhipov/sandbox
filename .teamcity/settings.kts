@@ -50,7 +50,6 @@ object Build : BuildType({
             name = "Step Two"
             scriptContent = """
                 echo %build.number%
-                exit 1
             """.trimIndent()
         }
         script {
