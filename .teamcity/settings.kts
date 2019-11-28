@@ -27,9 +27,15 @@ version = "2019.2"
 
 project {
 
-    buildType(Build)
-    buildType(Deploy)
-    buildType(Test)
+    sequential {
+        buildType(Build)
+        parallel {
+            buildType(Test1)
+            buildType(Test2)
+        }
+        buildType(Deploy)
+    }
+
 }
 
 object Build : BuildType({
@@ -54,21 +60,14 @@ object Build : BuildType({
     }
 })
 
-object Deploy : BuildType({
-    name = "Deploy"
-
-    dependencies {
-        snapshot(Test) {
-        }
-    }
+object Test1 : BuildType({
+    name = "Test1"
 })
 
-object Test : BuildType({
-    name = "Test"
+object Test2 : BuildType({
+    name = "Test2"
+})
 
-    dependencies {
-        snapshot(Build) {
-            runOnSameAgent = true
-        }
-    }
+object Deploy : BuildType({
+    name = "Deploy"
 })
