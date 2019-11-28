@@ -32,7 +32,11 @@ project {
         parallel {
             sequential {
                 buildType(Test1)
-                buildType(Test2)
+                buildType(Test2) {
+                    dependsOn(Config) {
+                        runOnSameAgent = true
+                    }
+                }
             }
             buildType(Test3)
         }
@@ -61,6 +65,11 @@ object Build : BuildType({
         }
     }
 })
+
+object Config : BuildType({
+    name = "Config"
+})
+
 
 object Test1 : BuildType({
     name = "Test1"
