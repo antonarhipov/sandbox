@@ -1,5 +1,5 @@
-import jetbrains.buildServer.configs.kotlin.v2018_2.*
-import jetbrains.buildServer.configs.kotlin.v2018_2.buildSteps.script
+import jetbrains.buildServer.configs.kotlin.v2019_2.*
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 
 /*
 The settings script is an entry point for defining a TeamCity
@@ -23,36 +23,52 @@ To debug in IntelliJ Idea, open the 'Maven Projects' tool window (View
 'Debug' option is available in the context menu for the task.
 */
 
-version = "2018.2"
+version = "2019.2"
 
 project {
 
-    buildType(Run)
-    buildType(Start)
+    buildType(Build)
+    buildType(Deploy)
+    buildType(Test)
 }
 
-object Run : BuildType({
-    name = "Run"
+object Build : BuildType({
+    name = "Build"
 
     steps {
         script {
-            scriptContent = """echo "My parameter: ${Start.depParamRefs["MyParameter"]}""""
+            name = "Step One"
+            scriptContent = "echo %build.number%"
         }
-    }
-
-    dependencies {
-        snapshot(Start) {
-            reuseBuilds = ReuseBuilds.NO
+        script {
+            name = "Step Two"
+            scriptContent = """
+                echo %build.number%
+                exit 1
+            """.trimIndent()
+        }
+        script {
+            name = "Step Three"
+            scriptContent = "echo %build.number%"
         }
     }
 })
 
-object Start : BuildType({
-    name = "Start"
+object Deploy : BuildType({
+    name = "Deploy"
 
-    steps {
-        script {
-            scriptContent = """echo "##teamcity[setParameter name='MyParameter' value='MyValue']""""
+    dependencies {
+        snapshot(Test) {
+        }
+    }
+})
+
+object Test : BuildType({
+    name = "Test"
+
+    dependencies {
+        snapshot(Build) {
+            runOnSameAgent = true
         }
     }
 })
