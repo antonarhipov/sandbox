@@ -7,7 +7,7 @@ version = "2019.2"
 
 project {
     buildType(Config)
-    sequential {
+    val sequence = sequential {
         buildType(Build)
 
         parallel {
@@ -22,6 +22,8 @@ project {
 
         buildType(Deploy)
     }
+
+    sequence.buildTypes().forEach(this::buildType)
 }
 
 object Build : BuildType({
