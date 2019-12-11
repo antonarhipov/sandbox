@@ -9,7 +9,19 @@ version = "2019.2"
 project {
     vcsRoot(ProjectVcs)
 
+    buildType(Config)
+    val sequence = sequential {
+        buildType(Build)
+        parallel {
+            buildType(Test1)
+            buildType(Test2)
 
+            dependsOn(Config)
+        }
+        buildType(Deploy)
+    }
+
+    sequence.buildTypes().forEach(this::buildType)
 
 }
 
