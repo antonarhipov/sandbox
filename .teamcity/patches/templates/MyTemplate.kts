@@ -19,6 +19,10 @@ create(DslContext.projectId, Template({
             id = "RUNNER_3"
             scriptContent = """echo "First""""
         }
+        script {
+            id = "RUNNER_4"
+            scriptContent = """echo "Last""""
+        }
     }
 }))
 
