@@ -15,10 +15,6 @@ create(DslContext.projectId, Template({
     id("MyTemplate")
     name = "MyTemplate"
 
-    vcs {
-        root(RelativeId("ProjectVcs"))
-    }
-
     steps {
         script {
             id = "RUNNER_3"
