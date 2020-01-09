@@ -28,6 +28,7 @@ open class MyCommonTemplate : BuildType({
 
 object BuildA : MyCommonTemplate() {
     init {
+        name = "BuildA"
         steps {
             script {
                 scriptContent = """echo "More steps for A" """
@@ -38,6 +39,7 @@ object BuildA : MyCommonTemplate() {
 
 object BuildB : MyCommonTemplate() {
     init {
+        name = "BuildB"
         steps {
             script {
                 scriptContent = """echo "More steps for B" """
