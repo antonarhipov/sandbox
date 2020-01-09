@@ -2,6 +2,7 @@ package patches.templates
 
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
 import jetbrains.buildServer.configs.kotlin.v2019_2.Template
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.placeholder
 import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2019_2.ui.*
 
@@ -18,6 +19,9 @@ create(DslContext.projectId, Template({
         script {
             id = "RUNNER_3"
             scriptContent = """echo "First""""
+        }
+        placeholder {
+            id = "RUNNER_6"
         }
         script {
             id = "RUNNER_4"
